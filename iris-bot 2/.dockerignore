@@ -1,0 +1,26 @@
+# Dependencies — installed fresh inside Docker
+node_modules
+**/node_modules
+
+# Built output — rebuilt inside Docker
+artifacts/api-server/dist
+
+# Local bot data — not part of the image
+artifacts/api-server/data
+
+# Frontend sandbox — not needed for the bot
+artifacts/mockup-sandbox
+
+# Git & editor
+.git
+.gitignore
+.replit
+.local
+replit.nix
+*.md
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
