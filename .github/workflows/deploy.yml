@@ -9,10 +9,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Extract ZIP
-        run: unzip "iris-bot 2.zip" -d ./extracted
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: extracted-files
-          path: ./extracted
+      - name: Extract ZIP file
+        run: unzip -q iris-bot\ 2.zip -d ./extracted
+      - name: Copy files to root
+        run: |
+          cp -r extracted/* .
+          rm -rf extracted iris-bot\ 2.zip
+      - name: Commit and push
+        run: |
+          git config user.email "action@github.com"
+          git config user.name "GitHub Action"
+          git add -A
+          git commit -m "Extract iris-bot files" || true
+          git push
