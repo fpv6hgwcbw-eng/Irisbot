@@ -11,14 +11,17 @@ jobs:
       - uses: actions/checkout@v2
       - name: Extract ZIP file
         run: unzip -q iris-bot\ 2.zip -d ./extracted
-      - name: Copy files to root
+      - name: Copy extracted files to root
         run: |
-          cp -r extracted/* .
-          rm -rf extracted iris-bot\ 2.zip
-      - name: Commit and push
+          if [ -d "extracted" ]; then
+            ls -la extracted/
+            cp -r extracted/* .
+            rm -rf extracted iris-bot\ 2.zip
+          fi
+      - name: Commit extracted files
         run: |
-          git config user.email "action@github.com"
-          git config user.name "GitHub Action"
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
           git add -A
-          git commit -m "Extract iris-bot files" || true
+          git commit -m "Extract iris-bot project files" || echo "No changes to commit"
           git push
